@@ -85,10 +85,10 @@ let initialData = [
 ]
 
 const App = () => {
-
   let [data, setData] = useState(initialData);
   let [checkedData, setCheckedData] = useState(new Array(data.length).fill(false));
   let [total, setTotal] = useState(0);
+  let [numberOfDataChecked, setNumberOfDataChecked] = useState(0);
 
   const addData = () => {
     let id = data.length + 2;
@@ -113,33 +113,38 @@ const App = () => {
     let updatedData = data.slice();
     let updatedCheckedData = checkedData.slice();
     let checkedDebtToRemove = 0;
+    let boxesChecked = numberOfDataChecked;
     let updatedTotal = total;
     let checkboxToRemove = updatedCheckedData[updatedCheckedData.length - 1];
     let dataToRemove = updatedData[updatedData.length - 1];
 
     if (checkboxToRemove === true) {
       checkedDebtToRemove = updatedData[updatedData.length - 1].balance;
+      boxesChecked--;
     }
     updatedTotal -= checkedDebtToRemove;
 
     updatedData.pop();
     updatedCheckedData.pop();
 
+    setNumberOfDataChecked(boxesChecked);
     setTotal(updatedTotal);
     setCheckedData(updatedCheckedData);
     setData(updatedData);
   }
 
   const handleCheckboxChange = (event) => {
+    let boxesChecked = numberOfDataChecked;
     const updatedCheckedData = checkedData.slice();
     for (let i = 0; i < updatedCheckedData.length; i++) {
       let selectedCheckbox = Number(event.target.id.toString().replace('custom-checkbox-', ''));
-      console.log(event.target.id);
       if (i === selectedCheckbox) {
         updatedCheckedData[i] = !updatedCheckedData[i];
+        boxesChecked++;
       }
     };
 
+    setNumberOfDataChecked(boxesChecked);
     setCheckedData(updatedCheckedData);
 
     const totalDebt = updatedCheckedData.reduce(
@@ -190,8 +195,10 @@ const App = () => {
             <td colSpan="5" className="right">${total.toFixed(2)}</td>
           </tr>
           <tr>
-            <td>Total row count:</td>
-            <td colSpan="5" className="right">{data.length}</td>
+            <td colSpan="2">Total Row Count:</td>
+            <td className="left">{data.length}</td>
+            <td>Check Row Count:</td>
+            <td className="left">{numberOfDataChecked}</td>
           </tr>
         </tbody>
       </table>
