@@ -1,6 +1,6 @@
-# STRATEGIC FINANCIAL SOLTIONS CODING CHALLENGE
+# STRATEGIC FINANCIAL SOLUTIONS CODING CHALLENGE
 
-Empty project.
+Interview coding challenge for full-stack React and JS web app creation and Jest and React Testing Library test suite.
 
 ## Building and running on localhost
 
