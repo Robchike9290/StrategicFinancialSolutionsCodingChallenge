@@ -87,6 +87,7 @@ let initialData = [
 const App = () => {
 
   let [data, setData] = useState(initialData);
+  let [checkedData, setCheckedData] = useState([]);
 
   const addData = () => {
     let id = data.length + 2;
@@ -108,6 +109,26 @@ const App = () => {
     setData(updatedData);
   }
 
+  // NEED TO WORK ON THIS FUNCTION
+  const handleCheckboxClick = (event) => {
+    console.log('in checkbox function');
+    console.log(event.target.checked);
+    console.log(event);
+    let updatedCheckedData = checkedData.slice();
+    updatedCheckedData.forEach(point => {
+      if (point.testid === event.target.value) {
+          point.isChecked = event.target.checked;
+          if(event.target.checked === true) {
+              // instead of setting your state here, push to your array
+              updatedCheckedData.push(point);
+          }
+          console.log(checkedData);
+      }
+    });
+    // setState with updated checked values
+    setCheckedData(updatedCheckedData);
+  }
+
   return (
     <div>
       <table>
@@ -124,12 +145,12 @@ const App = () => {
         <tbody>
           {data.map((item, index) => (
             <tr key={index}>
-              <td className="column"><input type="checkbox"></input></td>
+              <td className="column" onClick={handleCheckboxClick}><input type="checkbox"></input></td>
               <td className="column">{item.creditorName}</td>
               <td className="column">{item.firstName}</td>
               <td className="column">{item.lastName}</td>
-              <td className="column">{item.minPaymentPercentage}</td>
-              <td className="column">{item.balance}</td>
+              <td className="column right">{item.minPaymentPercentage.toFixed(2) + '%'}</td>
+              <td className="column right">{item.balance.toFixed(2)}</td>
             </tr>
           ))}
           <tr>
