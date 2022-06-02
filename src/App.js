@@ -139,8 +139,12 @@ const App = () => {
     for (let i = 0; i < updatedCheckedData.length; i++) {
       let selectedCheckbox = Number(event.target.id.toString().replace('custom-checkbox-', ''));
       if (i === selectedCheckbox) {
+        if (updatedCheckedData[i] === true) {
+          boxesChecked--;
+        } else {
+          boxesChecked++
+        }
         updatedCheckedData[i] = !updatedCheckedData[i];
-        boxesChecked++;
       }
     };
 
