@@ -138,11 +138,11 @@ const App = () => {
           </tr>
           <tr>
             <td>Total</td>
-            <td colSpan="5" className="right">FILL ME IN WITH A FUNCTION TO ADD STUFF, PLEASE</td>
+            <td colSpan="5" className="right">BUILD ME OUT</td>
           </tr>
           <tr>
             <td>Total row count:</td>
-            <td colSpan="5" className="right">FILL ME IN WITH A FUNCTION TO ADD STUFF, PLEASE</td>
+            <td colSpan="5" className="right">{data.length}</td>
           </tr>
         </tbody>
       </table>
