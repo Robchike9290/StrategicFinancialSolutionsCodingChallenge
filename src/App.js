@@ -87,7 +87,8 @@ let initialData = [
 const App = () => {
 
   let [data, setData] = useState(initialData);
-  let [checkedData, setCheckedData] = useState([]);
+  let [checkedData, setCheckedData] = useState(new Array(data.length).fill(false));
+  let [total, setTotal] = useState(0);
 
   const addData = () => {
     let id = data.length + 2;
@@ -100,33 +101,40 @@ const App = () => {
       "minPaymentPercentage": 7.00,
       "balance": 5000.00
     });
+    // ADD FUNCTIONALITY FOR ADDING TO THE CHECK BOX ARRAY
     setData(updatedData);
   }
 
   const removeData = () => {
     let updatedData = data.slice();
     updatedData.pop();
+    // ADD FUNCTIONALITY FOR REMOVING FROM THE CHECK BOX ARRAY
     setData(updatedData);
   }
 
   // NEED TO WORK ON THIS FUNCTION
-  const handleCheckboxClick = (event) => {
-    console.log('in checkbox function');
-    console.log(event.target.checked);
-    console.log(event);
-    let updatedCheckedData = checkedData.slice();
-    updatedCheckedData.forEach(point => {
-      if (point.testid === event.target.value) {
-          point.isChecked = event.target.checked;
-          if(event.target.checked === true) {
-              // instead of setting your state here, push to your array
-              updatedCheckedData.push(point);
-          }
-          console.log(checkedData);
+  const handleCheckboxChange = (event) => {
+    const updatedCheckedData = checkedData.slice();
+    for (let i = 0; i < updatedCheckedData.length; i++) {
+      let selectedCheckbox = Number(event.target.id.toString().replace('custom-checkbox-', ''));
+      if (i === selectedCheckbox) {
+        updatedCheckedData[i] = !updatedCheckedData[i];
       }
-    });
-    // setState with updated checked values
+    };
+
     setCheckedData(updatedCheckedData);
+
+    const totalDebt = updatedCheckedData.reduce(
+      (sum, currentState, index) => {
+        if (currentState === true) {
+          return sum + data[index].balance;
+        }
+        return sum;
+      },
+      0
+    );
+
+    setTotal(totalDebt);
   }
 
   return (
@@ -145,7 +153,9 @@ const App = () => {
         <tbody>
           {data.map((item, index) => (
             <tr key={index}>
-              <td className="column" onClick={handleCheckboxClick}><input type="checkbox"></input></td>
+              <td className="column">
+                <input id={`custom-checkbox-${index}`} onChange={handleCheckboxChange} type="checkbox"></input>
+                </td>
               <td className="column">{item.creditorName}</td>
               <td className="column">{item.firstName}</td>
               <td className="column">{item.lastName}</td>
@@ -159,7 +169,7 @@ const App = () => {
           </tr>
           <tr>
             <td>Total</td>
-            <td colSpan="5" className="right">BUILD ME OUT</td>
+            <td colSpan="5" className="right">${total.toFixed(2)}</td>
           </tr>
           <tr>
             <td>Total row count:</td>
