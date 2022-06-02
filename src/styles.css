@@ -1,4 +1,13 @@
 .column {
-  width: 100px;
+  width: 140px;
 }
 
+.left {
+  width: 100px;
+  text-align: left;
+}
+
+.right {
+  width: 200px;
+  text-align: right;
+}

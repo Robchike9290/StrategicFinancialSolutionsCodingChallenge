@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { hot } from 'react-hot-loader/root';
 
 let initialData = [
@@ -86,7 +86,7 @@ let initialData = [
 
 const App = () => {
 
-  console.log(initialData);
+  let [data, setData] = useState(initialData);
 
   return (
     <div>
@@ -102,33 +102,33 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          <Body/>
+          {data.map((item, index) => (
+            <tr key={index}>
+              <td className="column"><input type="checkbox"></input></td>
+              <td className="column">{item.creditorName}</td>
+              <td className="column">{item.firstName}</td>
+              <td className="column">{item.lastName}</td>
+              <td className="column">{item.minPaymentPercentage}</td>
+              <td className="column">{item.balance}</td>
+            </tr>
+          ))}
+          <tr>
+            <td><button>Add Debt</button></td>
+            <td><button>Remove Debt</button></td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td colSpan="5" className="right">FILL ME IN WITH A FUNCTION TO ADD STUFF, PLEASE</td>
+          </tr>
+          <tr>
+            <td>Total row count:</td>
+            <td colSpan="5" className="right">FILL ME IN WITH A FUNCTION TO ADD STUFF, PLEASE</td>
+          </tr>
         </tbody>
       </table>
+
     </div>
   );
-}
-
-const Body = () => {
-  return (
-    <tr>
-      {initialData.map((item, id) => {
-        <Row
-          creditorName={item.creditorName}
-          firstName={item.firstName}
-          lastName={item.lastName}
-          minPaymentPercentage={item.minPaymentPercentage}
-          balance={item.balance}
-        />
-      })}
-    </tr>
-  )
-}
-
-const Row = (props) => {
-  return (
-    <span>{props.creditorName}</span>
-  )
 }
 
 export default hot(App);
