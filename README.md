@@ -1,4 +1,4 @@
-# strate
+# STRATEGIC FINANCIAL SOLTIONS CODING CHALLENGE
 
 Empty project.
 
