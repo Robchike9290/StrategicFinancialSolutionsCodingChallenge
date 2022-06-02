@@ -101,22 +101,40 @@ const App = () => {
       "minPaymentPercentage": 7.00,
       "balance": 5000.00
     });
-    // ADD FUNCTIONALITY FOR ADDING TO THE CHECK BOX ARRAY
+
+    let updatedCheckedData = checkedData.slice();
+    updatedCheckedData.push(false);
+
+    setCheckedData(updatedCheckedData);
     setData(updatedData);
   }
 
   const removeData = () => {
     let updatedData = data.slice();
+    let updatedCheckedData = checkedData.slice();
+    let checkedDebtToRemove = 0;
+    let updatedTotal = total;
+    let checkboxToRemove = updatedCheckedData[updatedCheckedData.length - 1];
+    let dataToRemove = updatedData[updatedData.length - 1];
+
+    if (checkboxToRemove === true) {
+      checkedDebtToRemove = updatedData[updatedData.length - 1].balance;
+    }
+    updatedTotal -= checkedDebtToRemove;
+
     updatedData.pop();
-    // ADD FUNCTIONALITY FOR REMOVING FROM THE CHECK BOX ARRAY
+    updatedCheckedData.pop();
+
+    setTotal(updatedTotal);
+    setCheckedData(updatedCheckedData);
     setData(updatedData);
   }
 
-  // NEED TO WORK ON THIS FUNCTION
   const handleCheckboxChange = (event) => {
     const updatedCheckedData = checkedData.slice();
     for (let i = 0; i < updatedCheckedData.length; i++) {
       let selectedCheckbox = Number(event.target.id.toString().replace('custom-checkbox-', ''));
+      console.log(event.target.id);
       if (i === selectedCheckbox) {
         updatedCheckedData[i] = !updatedCheckedData[i];
       }
