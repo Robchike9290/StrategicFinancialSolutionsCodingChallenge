@@ -88,6 +88,26 @@ const App = () => {
 
   let [data, setData] = useState(initialData);
 
+  const addData = () => {
+    let id = data.length + 2;
+    let updatedData = data.slice();
+    updatedData.push({
+      "id": id,
+      "creditorName": "Frost Bank",
+      "firstName": "Joe",
+      "lastName": "Davids",
+      "minPaymentPercentage": 7.00,
+      "balance": 5000.00
+    });
+    setData(updatedData);
+  }
+
+  const removeData = () => {
+    let updatedData = data.slice();
+    updatedData.pop();
+    setData(updatedData);
+  }
+
   return (
     <div>
       <table>
@@ -113,8 +133,8 @@ const App = () => {
             </tr>
           ))}
           <tr>
-            <td><button>Add Debt</button></td>
-            <td><button>Remove Debt</button></td>
+            <td><button onClick={addData}>Add Debt</button></td>
+            <td><button onClick={removeData}>Remove Debt</button></td>
           </tr>
           <tr>
             <td>Total</td>
